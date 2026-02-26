@@ -81,7 +81,7 @@ export const buildLogData: LogYear[] = [
         year: '2025',
         cardClass: 'cursor',
         logos: [`${base}/images/cursor.png`, `${base}/images/lovable.png`, `${base}/images/supabase.png`],
-        caption: 'Rebuild segmentation, and sentiment measurement tools to enable social aggregate ranks of images and videos.',
+        caption: 'Rebuild segmentation and sentiment measurement tools to enable social aggregate ranks of images and videos.',
         videos: [
           { src: `${base}/videos/2026 rank.webm` },
           { src: `${base}/videos/pairrank.webm` },
