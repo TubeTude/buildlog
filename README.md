@@ -29,6 +29,14 @@ buildLog/
 
 ## Deploy
 
+### GitHub Pages (live site)
+
+**Live URL:** https://tubetude.github.io/buildlog/
+
+To enable (one-time): **GitHub repo → Settings → Pages → Source: Deploy from a branch → Branch: main, Folder: / (root) → Save.** The site will be served from the repo root; all links and assets use relative paths and work under `/buildlog/`.
+
+### Local / other hosting
+
 Static site. Serve the repo root (so `index.html`, `resume.html`, and `assets/` are at the same level). No build step required.
 
 ## Using Lovable + Supabase as a CMS
@@ -39,3 +47,13 @@ To manage build log posts via Supabase (like a WordPress blog), see **[docs/LOVA
 - **Option 2:** Keeping this static site and loading entries from Supabase with JavaScript.
 
 A ready-to-run Supabase schema is in **`supabase/schema.sql`** (tables: `build_log_entries`, `build_log_media`, `build_log_logos`).
+
+### Push React build log to Lovable
+
+To deploy the React version (in `lovable-app/`) to your Lovable-linked repo:
+
+```bash
+./scripts/push-to-lovable.sh
+```
+
+This copies `assets/` into `lovable-app/public/`, pushes the contents of `lovable-app/` as the root of the **lovable** remote (`TubeTude/my-desktop-buildlog`), and leaves your main branch unchanged. Then refresh your project in Lovable.
