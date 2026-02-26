@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume — Juan Nogueira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #1a1a1a;
+      background-color: #f0ebe0;
+      background-image:
+        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(240, 235, 224, 0.96);
+      backdrop-filter: blur(10px);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid #e5e2de;
+    }
+    .site-nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .site-nav__logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      margin-bottom: 0.35rem;
+    }
+    .site-nav__logo:hover { color: inherit; }
+    .site-nav__logo-box {
+      background: #faf8f3;
+      border: 1px solid #1a1a1a;
+      border-right-width: 3px;
+      border-bottom-width: 3px;
+      border-radius: 5px;
+      box-shadow: 3px 3px 0 #1a1a1a, 4px 4px 0 rgba(0, 0, 0, 0.08);
+      padding: 0.25rem 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .site-nav__logo-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      letter-spacing: 0.02em;
+      margin: 0;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .site-nav__logo-subtitle {
+      font-size: 0.5625rem;
+      font-weight: 500;
+      color: #2d7a8c;
+      letter-spacing: 0.12em;
+      text-transform: lowercase;
+      margin: 0;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .site-nav__back {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #2d7a8c;
+      text-decoration: none;
+    }
+    .site-nav__back:hover { text-decoration: underline; }
+    .resume-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .resume-name {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #1a1a1a;
+      margin: 0 0 0.35rem 0;
+      text-transform: uppercase;
+    }
+    .resume-titles {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #333;
+      margin: 0 0 0.5rem 0;
+    }
+    .resume-attribs {
+      font-size: 0.875rem;
+      color: #444;
+      margin: 0 0 0.35rem 0;
+    }
+    .resume-links {
+      font-size: 0.875rem;
+      color: #444;
+      margin-bottom: 2rem;
+    }
+    .resume-links a {
+      color: #1a365d;
+      text-decoration: none;
+    }
+    .resume-links a:hover { text-decoration: underline; }
+    .resume-section-title {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0 0 0.75rem 0;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+    .resume-section {
+      margin-bottom: 2rem;
+    }
+    .resume-section p {
+      margin: 0 0 0.5rem 0;
+      color: #333;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+    .resume-competencies {
+      color: #333;
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .resume-project {
+      margin-bottom: 1.5rem;
+    }
+    .resume-project:last-child { margin-bottom: 0; }
+    .resume-project-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+    .resume-project-title {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: #1a1a1a;
+    }
+    .resume-project-tag {
+      font-size: 0.8125rem;
+      color: #555;
+      font-weight: 500;
+    }
+    .resume-project-year {
+      font-size: 0.8125rem;
+      color: #555;
+    }
+    .resume-project ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: #333;
+      font-size: 0.875rem;
+      line-height: 1.55;
+    }
+    .resume-project li {
+      margin-bottom: 0.25rem;
+    }
+    .resume-credentials {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: #333;
+      font-size: 0.875rem;
+      line-height: 1.55;
+    }
+    .resume-credentials li {
+      margin-bottom: 0.4rem;
+    }
+    .resume-download {
+      display: inline-block;
+      margin-top: 2rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #1a365d;
+      text-decoration: none;
+    }
+    .resume-download:hover { text-decoration: underline; }
+    .resume-item-meta {
+      color: #555 !important;
+    }
+    .resume-download-wrap {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    .resume-download-wrap .resume-download {
+      margin-top: 0;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background: #1a1a1a;
+      color: #f0ebe0;
+      border-radius: 4px;
+      font-size: 0.875rem;
+    }
+    .resume-download-wrap .resume-download:hover {
+      background: #333;
+      color: #f0ebe0;
+    }
+    .resume-download-wrap .resume-download--pdf {
+      background: transparent;
+      color: #1a365d;
+      border: 1px solid #1a365d;
+      cursor: pointer;
+      font: inherit;
+    }
+    .resume-download-wrap .resume-download--pdf:hover {
+      background: rgba(26, 54, 93, 0.08);
+      color: #1a365d;
+    }
+    @media print {
+      .site-nav,
+      .resume-download-wrap {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+        background-image: none;
+      }
+      .resume-wrap {
+        padding-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main">
+    <div class="site-nav-inner">
+      <a href="index.html" class="site-nav__logo" aria-label="Back to Build Log">
+        <span class="site-nav__logo-box">
+          <span class="site-nav__logo-title">Hello Juan!</span>
+        </span>
+        <span class="site-nav__logo-subtitle">//building log</span>
+      </a>
+      <a href="index.html" class="site-nav__back">← Build Log</a>
+    </div>
+  </nav>
+  <div class="resume-wrap">
+    <h1 class="resume-name">Juan Nogueira</h1>
+    <p class="resume-titles">AI-Native Builder · Product & Growth Strategist · Revenue Operator</p>
+    <p class="resume-attribs">New Orleans, LA · U.S. Patent Holder · 2.1M Lines of AI-Generated Code · 1.14B Cursor Tokens</p>
+    <p class="resume-links">
+      <a href="https://www.linkedin.com/in/juannog/" target="_blank" rel="noopener">linkedin.com/in/juannog</a> · <a href="https://github.com/tubetude" target="_blank" rel="noopener">github.com/tubetude</a> · <a href="https://tudebit.com/ytxy" target="_blank" rel="noopener">tudebit.com/ytxy</a>
+    </p>
+
+    <section class="resume-section">
+      <h2 class="resume-section-title">Profile</h2>
+      <p>Revenue-generating media strategist turned AI-native builder with 17+ years closing enterprise deals and 6+ years shipping software products. I've generated $40M+ in advertising revenue, secured a U.S. patent for a novel video sentiment tool, and now build full-stack AI applications—2.1M lines of code on Lovable (top 1% in the U.S.) and 1.14B tokens on Cursor. I combine deep customer empathy with rapid prototyping to create tools that close deals, automate pipelines, and ship fast. Ideal fit: AI startups, growth/product roles, or companies building in the media, video, or sentiment intelligence space.</p>
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-section-title">Core Competencies</h2>
+      <p class="resume-competencies">AI Product Development (Cursor, Lovable, Claude API) · Revenue Growth & Enterprise Sales · Sentiment & Video Analytics · Rapid Prototyping & Vibe Coding · Full-Stack Deployment (Supabase, AWS, Cloudflare R2, Django) · IoT & Computer Vision (Jetson Nano, ESP32) · Prompt Engineering · Patent Strategy · Broadcast & Streaming Media</p>
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-section-title">AI & Technical Projects</h2>
+
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">AI-Powered Cold Call Pipeline</span>
+          <span class="resume-project-tag">| Self-Developed Tool</span>
+          <span class="resume-project-year">2025</span>
+        </div>
+        <ul>
+          <li>Generated $100K in closed revenue in 3 months using an autonomous Claude-powered proposal generation and outreach system built with the Anthropic API.</li>
+          <li>Designed six operational clusters covering data enrichment, sentiment analysis, distribution, and client communication automation.</li>
+        </ul>
+      </div>
+
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">Boudreaux — Autonomous Sales AI Agent</span>
+          <span class="resume-project-tag">| Personal Project</span>
+          <span class="resume-project-year">2025</span>
+        </div>
+        <ul>
+          <li>Built an AI assistant integrated via WhatsApp and web interface using Node.js, Claude API, ngrok tunneling, and Twilio.</li>
+          <li>Deployed personal infrastructure on a repurposed 2016 MacBook as a private, local-first AI server with Tailscale networking.</li>
+        </ul>
+      </div>
+
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">TudeBit / beta.ReelTude — AI Video Ranking Platform</span>
+          <span class="resume-project-tag">| Personal Project</span>
+          <span class="resume-project-year">2019–Present</span>
+        </div>
+        <ul>
+          <li>U.S. Patent Holder (2024) for a novel video sentiment measurement system capturing second-by-second viewer feedback with comments and rankings.</li>
+          <li>Migrated from Supabase Storage to Cloudflare R2 with JWT authentication and public video streaming.</li>
+          <li>Rebuilt ranking, segmentation, and sentiment tools on Django/AWS with full user authentication.</li>
+          <li>Originally prototyped via chat-based development on Upwork/Fiverr; evolved through Java front-end to modern full-stack architecture.</li>
+        </ul>
+      </div>
+
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">LiveBingo.Fun — Multiplayer Live Bingo Platform</span>
+          <span class="resume-project-tag">| Personal Project</span>
+          <span class="resume-project-year">2025</span>
+        </div>
+        <ul>
+          <li>Built and deployed a real-time multiplayer bingo platform on Supabase with optional Twitch live streaming integration.</li>
+        </ul>
+      </div>
+
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">TubeTude — Smart Home AI & IoT System</span>
+          <span class="resume-project-tag">| Personal Project</span>
+          <span class="resume-project-year">2022–Present</span>
+        </div>
+        <ul>
+          <li>Configured a Jetson Nano Linux server for local AI inference, computer vision (TV brand/model recognition), and home automation.</li>
+          <li>Built an Apple TV remote controller via local network using pyatv; integrated ESP32 boards with IR emitters/receivers.</li>
+          <li>Implemented systemd services, React + TypeScript + Vite frontend, and API endpoints for full home automation control.</li>
+        </ul>
+      </div>
+
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">Lovable + Hangout.FM Virtual Buildathon</span>
+          <span class="resume-project-tag">| Community Organizer</span>
+          <span class="resume-project-year">2025</span>
+        </div>
+        <ul>
+          <li>Introduced to Lovable Platform by organizing the Hangout.FM Buildathon partnership between Lovable and the Popular Social Streaming service with over 1M users.</li>
+          <li>Worked directly with Founder and CEO Joe Peralta to customize Hangout.FM platform to integrate Lovable (The Lovable Vibe Meter).</li>
+          <li>Organized key deal points to secure the first sponsorship revenue for Hangout.FM.</li>
+          <li>Built the Hackathon Registration and selection process on Lovable with native Supabase database integration.</li>
+          <li>Brought together developers and the Lovable team for a live buildathon event, showcasing AI-assisted product development at scale.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-section-title">Professional Experience</h2>
+
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">Senior Business Development Media Specialist</span>
+          <span class="resume-project-year">May 2008 – Present</span>
+        </div>
+        <p class="resume-item-meta" style="margin-bottom:0.5rem;">WDSU (NBC) — Hearst Television · New Orleans, LA</p>
+        <ul>
+          <li>$35M+ in advertising revenue secured ($2.5M+ annually); consistently exceeded performance and budget expectations.</li>
+          <li>Generated a $100K AI-automated pipeline in 3 months using custom-built prospecting and proposal tools.</li>
+          <li>Leading revenue generator for Olympics and Sunday Night Football exceeding National Sales by securing business from local sponsors delivering premium reach and measurable ROI.</li>
+          <li>Delivered weekly/quarterly market forecasts and competitive strategies to increase market share.</li>
+          <li>3x Hearst Television Eagle Award recipient for sales performance and leadership.</li>
+          <li>Key contributor to PROMAX award-winning WDSU Parade Tracker App; integral role in Saints on 6, Mardi Gras Tracker, and Allstate Sugar Bowl initiatives.</li>
+          <li>Member of WDSU Editorial Board and recruited to Team 6 Task Force (premier workplace culture initiative).</li>
+          <li>Generated custom research insights via partnerships with Magid and SmithGeiger Group.</li>
+        </ul>
+      </div>
+
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">Distribution Manager</span>
+          <span class="resume-project-year">Feb 2007 – Feb 2008</span>
+        </div>
+        <p class="resume-item-meta" style="margin-bottom:0.5rem;">Stop Smiling Magazine · Chicago, IL</p>
+        <ul>
+          <li>Increased direct consignment sales 42% through relationships with 85 bookstores, record shops, and independent retailers.</li>
+          <li>Managed consignment accounts, collections, social media, and Google Analytics reporting across Chicago, New York, Memphis, and Los Angeles.</li>
+        </ul>
+      </div>
+
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">Production Assistant</span>
+          <span class="resume-project-year">Feb – May 2008</span>
+        </div>
+        <p class="resume-item-meta" style="margin-bottom:0.5rem;">New Orleans Jazz & Heritage Festival</p>
+        <ul>
+          <li>Supported 60 Louisiana restaurants at one of the world's premier cultural festivals; recognized for extraordinary dedication under severe weather conditions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-section-title">Leadership, Patents & Credentials</h2>
+      <ul class="resume-credentials">
+        <li>Top 1% Lovable User (U.S.): 2.1M lines of AI-generated code; 1.14B tokens on Cursor; 3,800 agents deployed.</li>
+        <li>U.S. Patent Holder: Video sentiment measurement — methods, systems, and media (issued 2024).</li>
+        <li>ASCAP Member since 2006: Musician, songwriter, and jingle creator — strong understanding of audio/IP/licensing landscape.</li>
+        <li>U.S. Selective Service: Appointed Local Board Member for the State of Louisiana.</li>
+        <li>Streaming & Production: OBS, ATEM, Final Cut Pro, Ableton Live, Stream Deck.</li>
+        <li>Civic Tech: Developed neighborhood websites and SMS engagement tools for community organizing.</li>
+        <li>MOOCs: University of Pennsylvania, Johns Hopkins, Berklee College of Music (Coursera/edX).</li>
+        <li>Student Leadership at LSU: President, Acacia Fraternity (2005); VP Recruitment, Interfraternity Council (2004).</li>
+      </ul>
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-section-title">Education</h2>
+      <div class="resume-project">
+        <div class="resume-project-head">
+          <span class="resume-project-title">B.S. in Marketing</span>
+          <span class="resume-project-year">December 2006</span>
+        </div>
+        <p class="resume-item-meta" style="margin-bottom:0.5rem;">Louisiana State University · Baton Rouge, LA</p>
+        <ul>
+          <li>Web Development Intern, New Emit Digital Media (2005): Introduction to web development and digital sales by early New Orleans agency founders.</li>
+          <li>Fudan University, Shanghai, China (Summer 2006): Mandarin and Chinese business culture via LSU Initiative Scholarship.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="resume-download-wrap">
+      <button type="button" class="resume-download resume-download--pdf" onclick="window.print();" aria-label="Save as PDF">Save as PDF</button>
+      <a href="assets/downloads/Juan_Nogueira_Resume.docx" class="resume-download" download>Download Word</a>
+    </div>
+  </div>
+</body>
+</html>

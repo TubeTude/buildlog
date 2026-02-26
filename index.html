@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Stack — Juan Nogueira Jr.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background-color: #f0ebe0;
+      background-image:
+        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(240, 235, 224, 0.96);
+      backdrop-filter: blur(10px);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid #e5e2de;
+    }
+
+    .site-nav-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-nav a {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .site-nav a:hover {
+      color: #555;
+    }
+
+    .site-nav__logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      margin-bottom: 0.35rem;
+    }
+
+    .site-nav__logo:hover {
+      color: inherit;
+    }
+
+    .site-nav__logo-box {
+      background: #faf8f3;
+      border: 1px solid #1a1a1a;
+      border-right-width: 3px;
+      border-bottom-width: 3px;
+      border-radius: 5px;
+      box-shadow: 3px 3px 0 #1a1a1a, 4px 4px 0 rgba(0, 0, 0, 0.08);
+      padding: 0.25rem 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .site-nav__logo-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      letter-spacing: 0.02em;
+      margin: 0;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .site-nav__logo-subtitle {
+      font-size: 0.5625rem;
+      font-weight: 500;
+      color: #2d7a8c;
+      letter-spacing: 0.12em;
+      text-transform: lowercase;
+      margin: 0;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    header {
+      margin-bottom: 56px;
+      padding-bottom: 40px;
+      text-align: center;
+    }
+
+    header .name {
+      display: block;
+      font-size: 2.25rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+    }
+
+    .site-nav__resume {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #2d7a8c;
+      text-decoration: none;
+    }
+
+    .site-nav__resume:hover {
+      text-decoration: underline;
+    }
+
+    /* Timeline + 3D card blog layout */
+    .log {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      position: relative;
+    }
+
+    .log li {
+      position: relative;
+      box-sizing: border-box;
+      min-height: 0;
+      height: auto;
+      display: block;
+      margin-bottom: 32px;
+      padding: 0;
+    }
+
+    .log li .year-row {
+      min-height: 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0 0 16px 0;
+    }
+
+    .log li .year-row.year-row--collapsed {
+      display: none;
+    }
+
+    .year {
+      flex-shrink: 0;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #666;
+      min-width: 2.5rem;
+    }
+
+    .entry {
+      color: #1a1a1a;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .bubble {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+    }
+
+    .bubble--with-summary {
+      flex-direction: column;
+      align-items: flex-start;
+      max-width: 100%;
+      padding: 0;
+    }
+
+    .bubble-summary {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: #555;
+      margin: 0.5rem 0 0 0;
+      max-width: 100%;
+    }
+
+    .bubble-logos {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .bubble img {
+      height: 28px;
+      width: auto;
+      display: block;
+      vertical-align: middle;
+      border-radius: 4px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .year-expand {
+      padding: 0;
+      margin-top: 0;
+    }
+
+    .year-expand:empty {
+      display: none;
+    }
+
+    .year-videos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .year-video-crop {
+      width: 160px;
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #000;
+      flex-shrink: 0;
+    }
+
+    .year-video-crop video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transform: scale(1.06);
+    }
+
+    .year-video-crop--16x9 {
+      width: min(520px, 95vw);
+      aspect-ratio: 16 / 9;
+      background: #f5f5f5;
+    }
+
+    .year-video-crop--16x9 video {
+      object-fit: contain;
+      transform: none;
+    }
+
+    .stats-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .stats-row {
+      position: relative;
+      background: #f5f5f5;
+      border: 1px solid #1a1a1a;
+      border-right-width: 4px;
+      border-bottom-width: 4px;
+      border-radius: 2px;
+      box-shadow: 5px 5px 0 #1a1a1a, 6px 6px 0 rgba(0, 0, 0, 0.06);
+      padding: 40px 24px 48px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .stats-row--jetson { box-shadow: 5px 5px 0 #1a1a1a, 6px 6px 0 rgba(0, 0, 0, 0.06), 7px 7px 0 rgba(6, 95, 70, 0.15); }
+    .stats-row--cursor { box-shadow: 5px 5px 0 #1a1a1a, 6px 6px 0 rgba(0, 0, 0, 0.06), 7px 7px 0 rgba(109, 40, 217, 0.12); }
+    .stats-row--lovable { box-shadow: 5px 5px 0 #1a1a1a, 6px 6px 0 rgba(0, 0, 0, 0.06), 7px 7px 0 rgba(190, 24, 93, 0.12); }
+    .stats-row--cmr { box-shadow: 5px 5px 0 #1a1a1a, 6px 6px 0 rgba(0, 0, 0, 0.06), 7px 7px 0 rgba(14, 165, 233, 0.12); }
+
+    .stats-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-year {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #2d7a8c;
+    }
+
+    .card-logos {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-logos::before {
+      content: 'built with';
+      font-size: 0.6875rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: #3d8fa1;
+      text-transform: lowercase;
+      margin-right: 2px;
+    }
+
+    .card-logos img {
+      height: 22px;
+      width: auto;
+      max-width: 28px;
+      display: block;
+      border-radius: 4px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .stats-row .stats-caption {
+      text-align: left;
+    }
+
+    .stats-caption {
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0;
+      margin-bottom: 1rem;
+      line-height: 1.45;
+      display: inline-block;
+      max-width: 100%;
+      letter-spacing: -0.01em;
+      color: #1a1a1a;
+    }
+
+    .stats-summary {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: #666;
+      margin: 0 0 1rem 0;
+      max-width: 56ch;
+    }
+
+    .stats-caption:empty::before {
+      content: 'Headline or sentence…';
+      color: #888;
+      font-weight: 400;
+    }
+
+    .stats-row-images {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      align-self: center;
+      width: 100%;
+    }
+
+    .stats-row .year-videos {
+      align-self: center;
+      width: 100%;
+    }
+
+    .stats-row-images--grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .stats-row-images--grid-2x2 img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 9/16;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .stats-row-images img {
+      width: auto;
+      max-width: 100%;
+      height: 260px;
+      aspect-ratio: 9/16;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      cursor: pointer;
+    }
+
+    .stats-row-images--no-crop img {
+      object-fit: contain;
+    }
+
+    .stats-row-images--horizontal img {
+      aspect-ratio: 16/9;
+      height: 280px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    @media (max-width: 640px) {
+      .stats-row-images img {
+        height: auto;
+        max-height: 50vh;
+        width: 100%;
+      }
+      .stats-row-images--no-crop img {
+        object-fit: contain;
+        max-height: none;
+        height: auto;
+      }
+      .stats-row-images--horizontal img {
+        height: auto;
+        max-height: 40vh;
+        width: 100%;
+      }
+      .stats-row-images--grid-2x2 {
+        grid-template-columns: 1fr 1fr;
+        max-width: 100%;
+      }
+      .stats-row-images--grid-2x2 img {
+        object-fit: cover;
+      }
+      .year-video-crop {
+        width: min(160px, 45vw);
+      }
+      .year-video-crop--16x9 {
+        width: 100%;
+        max-width: 95vw;
+      }
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 2rem;
+    }
+
+    .lightbox.is-open {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0.25rem;
+      opacity: 0.8;
+    }
+
+    .lightbox-close:hover {
+      opacity: 1;
+    }
+
+    .site-footer {
+      position: relative;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(45, 122, 140, 0.2);
+      text-align: center;
+      font-size: 0.8125rem;
+      color: #2d7a8c;
+      letter-spacing: 0.04em;
+    }
+
+    .site-footer::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 2px;
+      background: rgba(45, 122, 140, 0.45);
+      border-radius: 1px;
+    }
+
+    .site-footer a {
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+
+    .site-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .intro-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background-color: #f0ebe0;
+      background-image:
+        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .intro-modal.is-closed {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-modal__box {
+      background: #faf8f3;
+      border: 1px solid #1a1a1a;
+      border-right-width: 4px;
+      border-bottom-width: 4px;
+      border-radius: 8px;
+      box-shadow: 5px 5px 0 #1a1a1a, 6px 6px 0 rgba(0, 0, 0, 0.1);
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 0.85rem;
+      max-width: min-content;
+    }
+
+    .intro-modal__title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      letter-spacing: -0.02em;
+      margin: 0;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .intro-modal__subtitle {
+      font-size: 1.125rem;
+      font-weight: 400;
+      color: #2d7a8c;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      margin: 0 0 2rem 0;
+      line-height: 1.4;
+    }
+
+    .intro-modal__play {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .intro-modal__play img {
+      display: block;
+      height: 48px;
+      width: auto;
+    }
+
+    .intro-modal__play:hover img {
+      opacity: 0.85;
+    }
+
+    .intro-modal__password-wrap {
+      margin-bottom: 1rem;
+    }
+
+    .intro-modal__password {
+      display: block;
+      width: 120px;
+      margin: 0 auto 0.5rem;
+      padding: 0.4rem 0.6rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      text-align: center;
+      letter-spacing: 0.1em;
+      border: 1px solid #1a1a1a;
+      border-radius: 4px;
+      background: #faf8f3;
+    }
+
+    .intro-modal__password:focus {
+      outline: none;
+      border-color: #2d7a8c;
+      box-shadow: 0 0 0 2px rgba(45, 122, 140, 0.2);
+    }
+
+    .intro-modal__password-error {
+      font-size: 0.75rem;
+      color: #b91c1c;
+      text-align: center;
+      margin-top: 0.25rem;
+      min-height: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="intro-modal" class="intro-modal" aria-label="Welcome">
+    <div class="intro-modal__box">
+      <h1 class="intro-modal__title">Hello Juan!</h1>
+    </div>
+    <p class="intro-modal__subtitle">//building log</p>
+    <div class="intro-modal__password-wrap">
+      <input type="password" id="intro-password" class="intro-modal__password" placeholder="Password" autocomplete="off" maxlength="10" aria-label="Enter password">
+      <p class="intro-modal__password-error" id="intro-password-error" role="alert"></p>
+    </div>
+    <button type="button" class="intro-modal__play" aria-label="Enter and play all videos">
+      <img src="assets/images/play.png" alt="Play all">
+    </button>
+  </div>
+  <nav class="site-nav" aria-label="Main">
+    <div class="site-nav-inner">
+      <a href="#" class="site-nav__logo" aria-label="Juan Nogueira Build Log">
+        <span class="site-nav__logo-box">
+          <span class="site-nav__logo-title">Hello Juan!</span>
+        </span>
+        <span class="site-nav__logo-subtitle">//building log</span>
+      </a>
+      <a href="resume.html" class="site-nav__resume">Resume</a>
+    </div>
+  </nav>
+  <div class="container">
+    <ul class="log">
+      <li>
+        <div class="year-row year-row--collapsed">
+            <span class="year">2026</span>
+            <span class="entry"><span class="bubble"><span class="bubble-logos"><img src="assets/images/Jetson.png" alt=""></span></span></span>
+        </div>
+          <div class="year-expand">
+            <div class="stats-gallery">
+              <div class="stats-row stats-row--jetson">
+                <span class="card-year">2026</span>
+                <div class="card-logos"><img src="assets/images/Jetson.png" alt=""></div>
+                <div class="stats-caption">Set up home server with Jetson Nano. Created a remote to control my Apple TV. Jetson is very good for computer vision and I built a TV ad recognition tool that monitors broadcasts for phone numbers and URLs.</div>
+                <div class="year-videos">
+                  <div class="year-video-crop year-video-crop--16x9"><video src="assets/videos/screenscan2.webm" controls playsinline loop></video></div>
+                  <div class="year-video-crop year-video-crop--16x9"><video src="assets/videos/screenscan1.webm" controls playsinline loop></video></div>
+                </div>
+                <div class="stats-row-images stats-row-images--horizontal">
+                  <img src="assets/images/Live Camera OCR1.png" alt="">
+                  <img src="assets/images/Live Camera OCR2.png" alt="">
+                </div>
+              </div>
+              <div class="stats-row stats-row--jetson">
+                <span class="card-year">2026</span>
+                <div class="card-logos"><img src="assets/images/Jetson.png" alt=""></div>
+                <div class="stats-caption">Created Apple TV remote controller to turn on and launch apps via local network powered by Jetson Nano.</div>
+                <div class="year-videos">
+                  <div class="year-video-crop"><video src="assets/videos/remote.webm" controls playsinline loop></video></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </li>
+      <li>
+        <div class="year-row year-row--collapsed">
+            <span class="year">2025</span>
+            <span class="entry"><span class="bubble bubble--with-summary"><span class="bubble-logos"><img src="assets/images/cursor.png" alt=""> <img src="assets/images/lovable.png" alt=""> <img src="assets/images/supabase.png" alt=""></span><p class="bubble-summary">Working with Cursor showed the mindblowing capabilities of what AI systems that have context can achieve. The experience on Lovable and speed of deployment and capabilities to develop while on your mobile device opened new doors. Seamless integrations with Supabase gave me new capabilities to have full control over my ability to easily configure databases.</p></span></span>
+        </div>
+          <div class="year-expand">
+            <div class="stats-gallery">
+              <div class="stats-row stats-row--cmr">
+                <span class="card-year">2025</span>
+                <div class="stats-caption">Generated a Cold Call Pipeline that Closed 100K revenue in 3 months</div>
+                <div class="stats-row-images">
+                  <img src="assets/screenshots/codingstats/cmr1.PNG" alt="">
+                  <img src="assets/screenshots/codingstats/cmr2.PNG" alt="">
+                </div>
+              </div>
+              <div class="stats-row stats-row--cursor">
+                <span class="card-year">2025</span>
+                <div class="card-logos"><img src="assets/images/cursor.png" alt=""></div>
+                <div class="stats-caption">1.14 Billion Tokens and 3,800 agents on Cursor</div>
+                <div class="stats-row-images stats-row-images--grid-2x2">
+                  <img src="assets/screenshots/codingstats/cursor_1.jpeg" alt="">
+                  <img src="assets/screenshots/codingstats/cursor_2.jpeg" alt="">
+                  <img src="assets/screenshots/codingstats/cursor_3.jpeg" alt="">
+                  <img src="assets/screenshots/codingstats/cursor_4.jpeg" alt="">
+                </div>
+              </div>
+              <div class="stats-row stats-row--lovable">
+                <span class="card-year">2025</span>
+                <div class="card-logos"><img src="assets/images/lovable.png" alt=""> <img src="assets/images/supabase.png" alt=""></div>
+                <div class="stats-caption">Generated 2.1M lines of code on Lovable, a top 1% user in United States</div>
+                <div class="stats-row-images stats-row-images--no-crop">
+                  <img src="assets/screenshots/codingstats/lovable25_1.png" alt="">
+                  <img src="assets/screenshots/codingstats/lovable25_2.png" alt="">
+                  <img src="assets/screenshots/codingstats/lovable25_3.png" alt="">
+                  <img src="assets/screenshots/codingstats/lovable25_4.png" alt="">
+                  <img src="assets/screenshots/codingstats/lovable25_5.png" alt="">
+                  <img src="assets/screenshots/codingstats/lovable25_6.png" alt="">
+                </div>
+              </div>
+              <div class="stats-row stats-row--cursor">
+                <span class="card-year">2025</span>
+                <div class="card-logos"><img src="assets/images/cursor.png" alt=""> <img src="assets/images/lovable.png" alt=""> <img src="assets/images/supabase.png" alt=""></div>
+                <div class="stats-caption">Rebuild sentiment, segmentation, and sentiment measurement tools to enable social aggregate ranks.</div>
+              <div class="stats-row-images stats-row-images--horizontal">
+                <img src="assets/screenshots/tudebuildimages/pairranking.png" alt="">
+                <img src="assets/screenshots/tudebuildimages/secondsentiment.png" alt="">
+                <img src="assets/screenshots/tudebuildimages/segmentation.png" alt="">
+              </div>
+              <div class="year-videos">
+                <div class="year-video-crop"><video src="assets/videos/2026%20rank.webm" controls playsinline loop></video></div>
+                <div class="year-video-crop"><video src="assets/videos/pairrank.webm" controls playsinline loop></video></div>
+              </div>
+            </div>
+              <div class="stats-row stats-row--lovable">
+                <span class="card-year">2025</span>
+                <div class="card-logos"><img src="assets/images/lovable.png" alt=""> <img src="assets/images/supabase.png" alt=""></div>
+                <div class="stats-caption">Created LiveBingo.Fun a multiplayer live bingo platform on Supabase that includes an optional Twitch live streaming integration.</div>
+                <div class="year-videos">
+                  <div class="year-video-crop year-video-crop--16x9"><video src="assets/videos/bingo.webm" controls playsinline loop></video></div>
+                </div>
+              </div>
+              <div class="stats-row stats-row--lovable">
+                <span class="card-year">2025</span>
+                <div class="card-logos"><img src="assets/images/lovable.png" alt=""> <img src="assets/images/supabase.png" alt=""></div>
+                <div class="stats-caption">Introduced to Lovable Platform in the Summer of 2025 by organizing the Hangout.FM Buildathon partnership between Lovable and the Popular Social Streaming service with over 1M users.</div>
+              <div class="year-videos">
+                <div class="year-video-crop"><video src="assets/videos/buildathon/bld1.mov" controls playsinline loop></video></div>
+                <div class="year-video-crop"><video src="assets/videos/buildathon/bld2.mov" controls playsinline loop></video></div>
+                <div class="year-video-crop"><video src="assets/videos/buildathon/bld3.webm" controls playsinline loop></video></div>
+              </div>
+              </div>
+              <div class="stats-row stats-row--jetson">
+                <span class="card-year">2025</span>
+                <div class="card-logos"><img src="assets/images/cursor.png" alt=""> <img src="assets/images/aws.png" alt=""></div>
+                <div class="stats-caption">Rebuild ranking, segmentation, and sentiment measurement tools on a Django database on AWS to allow user authentication.</div>
+              <div class="year-videos">
+                <div class="year-video-crop"><video src="assets/videos/django.webm" controls playsinline loop></video></div>
+              </div>
+            </div>
+          </div>
+      </li>
+      <li>
+        <div class="year-row year-row--collapsed">
+            <span class="year">2024</span>
+            <span class="entry"><span class="bubble"><span class="bubble-logos"><img src="assets/images/VisualStudio.webp" alt=""> <img src="assets/images/django.png" alt=""></span></span></span>
+        </div>
+          <div class="year-expand">
+            <div class="stats-gallery">
+              <div class="stats-row stats-row--cmr">
+                <span class="card-year">2024</span>
+                <div class="card-logos"><img src="assets/images/chatgpt.png" alt=""> <img src="assets/images/VisualStudio.webp" alt=""></div>
+                <div class="stats-caption">Used Visual Studio and ChatGPT to create Java front end ranking, sorting and price sensitivity tools copying and pasting file by file.</div>
+                <div class="year-videos">
+                  <div class="year-video-crop"><video src="assets/videos/24/24Pair.webm" controls playsinline loop></video></div>
+                  <div class="year-video-crop"><video src="assets/videos/24/24comedy.webm" controls playsinline loop></video></div>
+                  <div class="year-video-crop"><video src="assets/videos/24/24likeno.webm" controls playsinline loop></video></div>
+                  <div class="year-video-crop"><video src="assets/videos/24/24price.webm" controls playsinline loop></video></div>
+                  <div class="year-video-crop"><video src="assets/videos/24/24suggested.webm" controls playsinline loop></video></div>
+                </div>
+              </div>
+              <div class="stats-row stats-row--jetson">
+                <span class="card-year">2024</span>
+                <div class="card-logos"><img src="assets/images/uspto.png" alt=""></div>
+                <div class="stats-caption">Patent Issued for Novel Video Sentiment measurement tool.</div>
+                <div class="stats-row-images stats-row-images--horizontal">
+                  <img src="assets/screenshots/tudebuildimages/patent.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+      </li>
+      <li>
+        <div class="year-row year-row--collapsed">
+            <span class="year">2023</span>
+            <span class="entry"><span class="bubble"><span class="bubble-logos"><img src="assets/images/chatgpt.png" alt=""></span></span></span>
+        </div>
+          <div class="year-expand"></div>
+      </li>
+      <li>
+        <div class="year-row year-row--collapsed"><span class="year">2022</span><span class="entry">—</span></div>
+          <div class="year-expand"></div>
+      </li>
+      <li>
+        <div class="year-row year-row--collapsed"><span class="year">2021</span><span class="entry">—</span></div>
+          <div class="year-expand"></div>
+      </li>
+      <li>
+        <div class="year-row year-row--collapsed"><span class="year">2020</span><span class="entry">—</span></div>
+          <div class="year-expand"></div>
+      </li>
+      <li>
+        <div class="year-row year-row--collapsed">
+          <span class="year">2019</span>
+          <span class="entry"><span class="bubble"><span class="bubble-logos"><img src="assets/images/upwork.png" alt=""> <img src="assets/images/fiverr.png" alt=""> <img src="assets/images/aws.png" alt=""> <img src="assets/images/js.png" alt=""></span></span></span>
+        </div>
+          <div class="year-expand">
+            <div class="stats-gallery">
+              <div class="stats-row">
+                <span class="card-year">2019</span>
+                <div class="card-logos"><img src="assets/images/upwork.png" alt=""> <img src="assets/images/fiverr.png" alt=""> <img src="assets/images/aws.png" alt=""> <img src="assets/images/js.png" alt=""></div>
+                <div class="stats-caption">Invented a unique sentiment capture tool while rebuilding TubeTude on AWS</div>
+                <div class="year-videos">
+                  <div class="year-video-crop"><video src="assets/videos/old/1_19test.webm" controls playsinline loop></video></div>
+                  <div class="year-video-crop"><video src="assets/videos/old/1_192origresult.webm" controls playsinline loop></video></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </li>
+      <li>
+        <div class="year-row year-row--collapsed">
+          <span class="year">2018</span>
+          <span class="entry"><span class="bubble"><span class="bubble-logos"><img src="assets/images/upwork.png" alt=""></span></span></span>
+        </div>
+          <div class="year-expand">
+            <div class="stats-gallery">
+              <div class="stats-row">
+                <span class="card-year">2018</span>
+                <div class="card-logos"><img src="assets/images/upwork.png" alt=""> <img src="assets/images/js.png" alt=""></div>
+                <div class="stats-caption">Frustrated by limited and overpriced dialtest options I started creating my own dial test via the chat on Upwork.</div>
+                <div class="year-videos">
+                  <div class="year-video-crop"><video src="assets/videos/old/0st18.webm" controls playsinline loop></video></div>
+                  <div class="year-video-crop year-video-crop--16x9"><video src="assets/videos/old/1st18.webm" controls playsinline loop></video></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </li>
+    </ul>
+    <footer class="site-footer">
+      Building projects — Juan Nogueira Jr.
+    </footer>
+  </div>
+
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+    <img src="" alt="">
+  </div>
+
+  <script>
+    (function() {
+      function playAllVideos() {
+        document.querySelectorAll('video').forEach(function(v) {
+          v.play().catch(function() {});
+        });
+      }
+      function closeIntroModal() {
+        var modal = document.getElementById('intro-modal');
+        if (modal) {
+          modal.classList.add('is-closed');
+        }
+      }
+      var playAllBtn = document.querySelector('.play-all-btn');
+      if (playAllBtn) {
+        playAllBtn.addEventListener('click', function() {
+          playAllVideos();
+        });
+      }
+      var introPlay = document.querySelector('.intro-modal__play');
+      var introPassword = document.getElementById('intro-password');
+      var introPasswordError = document.getElementById('intro-password-error');
+      var INTRO_PASSWORD = '5000';
+      if (introPlay && introPassword) {
+        introPlay.addEventListener('click', function() {
+          if (introPassword.value === INTRO_PASSWORD) {
+            if (introPasswordError) introPasswordError.textContent = '';
+            closeIntroModal();
+            playAllVideos();
+          } else {
+            if (introPasswordError) introPasswordError.textContent = 'Wrong password';
+            introPassword.focus();
+          }
+        });
+        introPassword.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') introPlay.click();
+        });
+      }
+      document.querySelectorAll('video').forEach(function(video) {
+        video.setAttribute('loop', 'loop');
+        video.loop = true;
+        function restart() {
+          video.currentTime = 0;
+          video.play().catch(function() {});
+        }
+        video.addEventListener('ended', function() {
+          restart();
+        });
+        video.addEventListener('timeupdate', function() {
+          var d = video.duration;
+          if (d > 0 && isFinite(d) && video.currentTime >= d - 0.25) {
+            restart();
+          }
+        });
+      });
+      var lightbox = document.getElementById('lightbox');
+      var lightboxImg = lightbox.querySelector('img');
+      document.querySelectorAll('.container img').forEach(function(img) {
+        img.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          lightboxImg.src = img.src;
+          lightbox.classList.add('is-open');
+          lightbox.setAttribute('aria-hidden', 'false');
+        });
+      });
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+      }
+      lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+      });
+    })();
+  </script>
+</body>
+</html>
