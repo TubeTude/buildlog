@@ -79,6 +79,25 @@ export const buildLogData: LogYear[] = [
       },
       {
         year: '2025',
+        cardClass: 'lovable',
+        logos: [`${base}/images/lovable.png`, `${base}/images/supabase.png`],
+        caption: 'Launched TudeBit.com a platform where comedians post social media content to help users discover their work. Successfully recruited 3 professional comedians to participate.',
+        videos: [
+          { src: `${base}/videos/hometrimed.webm` },
+          { src: `${base}/videos/detail.webm` },
+        ],
+      },
+      {
+        year: '2025',
+        cardClass: 'cursor',
+        logos: [`${base}/images/cursor.png`, `${base}/images/supabase.png`],
+        caption: 'Created a Second by Second video feedback dashboard where creators can segment audience reactions (how much they like the video and how likely they are to buy).',
+        videos: [
+          { src: `${base}/videos/xydemo.webm`, wide: true },
+        ],
+      },
+      {
+        year: '2025',
         cardClass: 'cursor',
         logos: [`${base}/images/cursor.png`, `${base}/images/lovable.png`, `${base}/images/supabase.png`],
         caption: 'Rebuild segmentation and sentiment measurement tools to enable social aggregate ranks of images and videos.',
