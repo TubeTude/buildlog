@@ -329,6 +329,23 @@
       transform: none;
     }
 
+    .year-video-crop--waveform {
+      width: min(520px, 95vw);
+      aspect-ratio: 6 / 1;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #000;
+      flex-shrink: 0;
+    }
+
+    .year-video-crop--waveform video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      transform: none;
+    }
+
     .stats-gallery {
       display: flex;
       flex-direction: column;
@@ -588,6 +605,51 @@
       text-decoration: underline;
     }
 
+    .site-intro {
+      max-width: 600px;
+      margin: 0 auto 56px;
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      color: #444;
+    }
+
+    .site-intro p {
+      margin: 0 0 0.75rem 0;
+    }
+
+    .site-intro p:last-child {
+      margin-bottom: 0;
+    }
+
+    .site-intro strong {
+      color: #1a1a1a;
+    }
+
+    .site-intro .site-intro__hello {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .site-intro .site-intro__sign {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: #2d7a8c;
+      letter-spacing: 0.02em;
+    }
+
+    .site-intro::after {
+      content: '';
+      display: block;
+      margin-top: 40px;
+      height: 1px;
+      background: linear-gradient(to right, rgba(45, 122, 140, 0.25), transparent);
+    }
+
     .intro-modal {
       position: fixed;
       inset: 0;
@@ -725,6 +787,11 @@
     </div>
   </nav>
   <div class="container">
+    <div class="site-intro">
+      <span class="site-intro__hello">Hello!</span>
+      <p>I'm a revenue-generating account executive who has generated <strong>$40M+</strong> in advertising revenue by building lasting client relationships. By night, I'm a dedicated builder and inventor — I've secured a <strong>U.S. patent</strong> for a novel video sentiment measurement tool. I'm eager to connect with teams interested in building automated sales and marketing pipelines. Here are some examples of what I've been building.</p>
+      <p>Thanks for visiting.<span class="site-intro__sign">— Juan</span></p>
+    </div>
     <ul class="log">
       <li>
         <div class="year-row year-row--collapsed">
@@ -733,6 +800,18 @@
         </div>
           <div class="year-expand">
             <div class="stats-gallery">
+              <div class="stats-row stats-row--cursor">
+                <span class="card-year">2026</span>
+                <div class="card-logos"><img src="assets/images/cursor.png" alt=""></div>
+                <div class="stats-caption">Built video to audio/JSON/MIDI converter to visualize <strong>second by second word rhythm &amp; pitch</strong> for sentiment analysis.</div>
+                <div class="year-videos">
+                  <div class="year-video-crop year-video-crop--waveform"><video src="assets/videos/midivisual.webm" controls playsinline loop></video></div>
+                </div>
+                <div class="year-videos">
+                  <div class="year-video-crop"><video src="assets/videos/converttojson.webm" controls playsinline loop></video></div>
+                  <div class="year-video-crop"><video src="assets/videos/visualizeaudio.webm" controls playsinline loop></video></div>
+                </div>
+              </div>
               <div class="stats-row stats-row--jetson">
                 <span class="card-year">2026</span>
                 <div class="card-logos"><img src="assets/images/Jetson.png" alt=""></div>

@@ -21,6 +21,17 @@ export const buildLogData: LogYear[] = [
     cards: [
       {
         year: '2026',
+        cardClass: 'cursor',
+        logos: [`${base}/images/cursor.png`],
+        caption: 'Built video to audio/JSON/MIDI converter to visualize second by second word rhythm & pitch for sentiment analysis.',
+        videos: [
+          { src: `${base}/videos/midivisual.webm`, wide: true },
+          { src: `${base}/videos/converttojson.webm` },
+          { src: `${base}/videos/visualizeaudio.webm` },
+        ],
+      },
+      {
+        year: '2026',
         cardClass: 'jetson',
         logos: [`${base}/images/Jetson.png`],
         caption: 'Set up home server with Jetson Nano. Created a remote to control my Apple TV. Jetson is very good for computer vision and I built a TV ad recognition tool that monitors broadcasts for phone numbers and URLs.',
