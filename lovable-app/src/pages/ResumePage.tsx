@@ -36,12 +36,12 @@ export default function ResumePage() {
               <span className="resume-project-year">2025</span>
             </div>
             <ul>
-              <li>Built custom CRM enrichment and prospecting tools to streamline cold outreach, automate research, and structure deal notes — directly contributed to $100K in closed revenue within 90 days.</li>
+              <li>Built custom CRM enrichment and prospecting tools to streamline cold outreach, automate research, and structure deal notes - directly contributed to $100K in closed revenue within 90 days.</li>
             </ul>
           </div>
           <div className="resume-project">
             <div className="resume-project-head">
-              <span className="resume-project-title">Tude.build — Structured Sentiment & Audience Intelligence Infrastructure</span>
+              <span className="resume-project-title">Tude.build - Structured Sentiment & Audience Intelligence Infrastructure</span>
               <span className="resume-project-tag">| Founder</span>
               <span className="resume-project-year">2019–Present</span>
             </div>
@@ -59,7 +59,7 @@ export default function ResumePage() {
               <span className="resume-project-year">2025</span>
             </div>
             <ul>
-              <li>Produced an AI buildathon between Lovable and Hangout.FM (1M+ users), executed entirely within both ecosystems — generating Hangout's first sponsorship revenue and mobilizing developer participation.</li>
+              <li>Produced an AI buildathon between Lovable and Hangout.FM (1M+ users), executed entirely within both ecosystems - generating Hangout's first sponsorship revenue and mobilizing developer participation.</li>
             </ul>
           </div>
         </section>
@@ -71,7 +71,7 @@ export default function ResumePage() {
               <span className="resume-project-title">Senior Business Development Media Specialist</span>
               <span className="resume-project-year">May 2008 – Present</span>
             </div>
-            <p className="resume-item-meta" style={{ marginBottom: '0.5rem' }}>WDSU (NBC) — Hearst Television | New Orleans, LA</p>
+            <p className="resume-item-meta" style={{ marginBottom: '0.5rem' }}>WDSU (NBC) - Hearst Television | New Orleans, LA</p>
             <ul>
               <li>Generated $40M+ in advertising revenue ($2.5M+ annually), consistently exceeding performance targets across local and national accounts.</li>
               <li>Owned local revenue strategy for marquee national broadcasts (Olympics, Sunday Night Football, NBA), consistently outperforming national sales through premium local sponsorship execution.</li>
@@ -125,7 +125,7 @@ export default function ResumePage() {
             </div>
             <p className="resume-item-meta" style={{ marginBottom: '0.5rem' }}>Louisiana State University | Baton Rouge, LA</p>
             <ul>
-              <li>Study Abroad: Fudan University (Shanghai, China) — Mandarin and Chinese business culture (LSU Initiative Scholarship).</li>
+              <li>Study Abroad: Fudan University (Shanghai, China) - Mandarin and Chinese business culture (LSU Initiative Scholarship).</li>
               <li>Early Experience: Web Development Intern, New Emit Digital Media (2005).</li>
             </ul>
           </div>

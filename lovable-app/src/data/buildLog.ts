@@ -64,7 +64,7 @@ export const buildLogData: LogYear[] = [
         year: '2025',
         cardClass: 'cursor',
         logos: [`${base}/images/cursor.png`],
-        caption: '1.14 Billion Tokens and 3,800 agents on Cursor',
+        caption: 'Cursor (AI Coding Environment) - Built and tested AI-driven systems, deploying 3,800+ agents across experiments in automation, media tooling, and workflow systems. Processed 1.14B tokens on Cursor while exploring the practical limits of AI-assisted software development and agent-based workflows.',
         images: [
           `${base}/screenshots/codingstats/cursor_1.jpeg`,
           `${base}/screenshots/codingstats/cursor_2.jpeg`,
@@ -77,7 +77,7 @@ export const buildLogData: LogYear[] = [
         year: '2025',
         cardClass: 'lovable',
         logos: [`${base}/images/lovable.png`, `${base}/images/supabase.png`],
-        caption: 'Generated 2.1M lines of code on Lovable, a top 1% user in United States',
+        caption: 'Lovable (AI Development Platform) - Generated 2.1M lines of AI-assisted code on Lovable, ranking as a Top 1% user in the United States, while experimenting with rapid AI-driven application development.',
         images: [
           `${base}/screenshots/codingstats/lovable25_1.png`,
           `${base}/screenshots/codingstats/lovable25_2.png`,
